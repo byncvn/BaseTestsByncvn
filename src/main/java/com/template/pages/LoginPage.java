@@ -5,11 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
-
-    public LoginPage(WebDriver driver) {
-        super(driver);
-    }
-
+    // Locators
     @FindBy(id = "username")
     private WebElement usernameField;
 
@@ -19,25 +15,22 @@ public class LoginPage extends BasePage {
     @FindBy(css = "button[type='submit']")
     private WebElement loginButton;
 
+    @FindBy(id = "dashboard") // Añadir locator del dashboard
+    private WebElement dashboardElement;
+
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
     // Métodos de la página
-    public void enterUsername(String username) {
-        usernameField.clear();
-        usernameField.sendKeys(username);
-    }
-
-    public void enterPassword(String password) {
-        passwordField.clear();
-        passwordField.sendKeys(password);
-    }
-
-    public void clickLogin() {
-        loginButton.click();
-    }
-
     public void login(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        clickLogin();
+        webUtils.sendKeys(usernameField, username);
+        webUtils.sendKeys(passwordField, password);
+        webUtils.click(loginButton);
+    }
+
+    // Método para verificar si el dashboard está visible
+    public boolean isDashboardDisplayed() {
+        return webUtils.isDisplayed(dashboardElement);
     }
 }

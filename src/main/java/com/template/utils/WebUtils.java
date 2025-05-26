@@ -14,19 +14,18 @@ public class WebUtils {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    public void click(By locator) {
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    public void click(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
-    public void sendKeys(By locator, String text) {
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        element.clear();
+    public void sendKeys(WebElement element, String text) {
+        wait.until(ExpectedConditions.visibilityOf(element)).clear();
         element.sendKeys(text);
     }
 
-    public boolean isDisplayed(By locator) {
+    public boolean isDisplayed(WebElement element) {
         try {
-            return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+            return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
         } catch (TimeoutException e) {
             return false;
         }
