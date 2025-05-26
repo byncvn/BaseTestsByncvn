@@ -1,24 +1,43 @@
 package com.template.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import com.template.utils.WebUtils;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class LoginPage {
-    private final WebUtils webUtils;
-
-    // Locators
-    private final By usernameField = By.id("username");
-    private final By passwordField = By.id("password");
-    private final By loginButton = By.cssSelector("button[type='submit']");
+public class LoginPage extends BasePage {
 
     public LoginPage(WebDriver driver) {
-        this.webUtils = new WebUtils(driver);
+        super(driver);
+    }
+
+    @FindBy(id = "username")
+    private WebElement usernameField;
+
+    @FindBy(id = "password")
+    private WebElement passwordField;
+
+    @FindBy(css = "button[type='submit']")
+    private WebElement loginButton;
+
+
+    // Métodos de la página
+    public void enterUsername(String username) {
+        usernameField.clear();
+        usernameField.sendKeys(username);
+    }
+
+    public void enterPassword(String password) {
+        passwordField.clear();
+        passwordField.sendKeys(password);
+    }
+
+    public void clickLogin() {
+        loginButton.click();
     }
 
     public void login(String username, String password) {
-        webUtils.sendKeys(usernameField, username);
-        webUtils.sendKeys(passwordField, password);
-        webUtils.click(loginButton);
+        enterUsername(username);
+        enterPassword(password);
+        clickLogin();
     }
 }
